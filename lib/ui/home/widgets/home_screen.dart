@@ -1,10 +1,12 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
+import 'package:doublehead/routing/routes.dart';
 import 'package:doublehead/ui/home/controller/home_controller.dart';
 import 'package:doublehead/ui/shared/ui_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../application/service/match/match_service.dart';
+import '../../../application/service/match/matches_service.dart';
 import '../../shared/app_app_bar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -19,13 +21,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(matchServiceProvider.notifier).loadMatches();
+      ref.read(matchesServiceProvider.notifier).loadMatches();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(homeControllerProvider);
+    final state = ref.watch(matchesServiceProvider);
     return AdaptiveScaffold(
       appBar: adaptiveAppBar(context),
       body: ListView(
@@ -49,6 +51,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     (m) => AdaptiveListTile(
                       title: Text(m.title),
                       subtitle: Text(m.startTime.toString()),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: () {
+                        context.push(Routes.matchPath(m.matchId));
+                      },
                     ),
                   ),
                   AdaptiveListTile(

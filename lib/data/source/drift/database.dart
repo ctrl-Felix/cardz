@@ -1,5 +1,6 @@
 import 'package:doublehead/data/source/drift/tables/match.dart';
 import 'package:doublehead/data/source/drift/tables/match_participant.dart';
+import 'package:doublehead/data/source/drift/tables/match_round.dart';
 import 'package:doublehead/data/source/drift/tables/player.dart';
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:drift/drift.dart';
@@ -14,7 +15,9 @@ part 'database.g.dart';
 
 const kDebugMode = true;
 
-@DriftDatabase(tables: [MatchTable, PlayerTable, MatchParticipantTable])
+@DriftDatabase(
+  tables: [MatchTable, PlayerTable, MatchParticipantTable, MatchRoundTable],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 

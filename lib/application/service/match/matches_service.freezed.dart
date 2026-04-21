@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'match_service.dart';
+part of 'matches_service.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'match_service.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$MatchServiceState {
+mixin _$MatchesServiceState {
 
  bool get isLoading; String? get errorMessage; List<TheMatch> get matches;
-/// Create a copy of MatchServiceState
+/// Create a copy of MatchesServiceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$MatchServiceStateCopyWith<MatchServiceState> get copyWith => _$MatchServiceStateCopyWithImpl<MatchServiceState>(this as MatchServiceState, _$identity);
+$MatchesServiceStateCopyWith<MatchesServiceState> get copyWith => _$MatchesServiceStateCopyWithImpl<MatchesServiceState>(this as MatchesServiceState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchServiceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.matches, matches));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchesServiceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.matches, matches));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,errorMessage,const DeepCol
 
 @override
 String toString() {
-  return 'MatchServiceState(isLoading: $isLoading, errorMessage: $errorMessage, matches: $matches)';
+  return 'MatchesServiceState(isLoading: $isLoading, errorMessage: $errorMessage, matches: $matches)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $MatchServiceStateCopyWith<$Res>  {
-  factory $MatchServiceStateCopyWith(MatchServiceState value, $Res Function(MatchServiceState) _then) = _$MatchServiceStateCopyWithImpl;
+abstract mixin class $MatchesServiceStateCopyWith<$Res>  {
+  factory $MatchesServiceStateCopyWith(MatchesServiceState value, $Res Function(MatchesServiceState) _then) = _$MatchesServiceStateCopyWithImpl;
 @useResult
 $Res call({
  bool isLoading, String? errorMessage, List<TheMatch> matches
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$MatchServiceStateCopyWithImpl<$Res>
-    implements $MatchServiceStateCopyWith<$Res> {
-  _$MatchServiceStateCopyWithImpl(this._self, this._then);
+class _$MatchesServiceStateCopyWithImpl<$Res>
+    implements $MatchesServiceStateCopyWith<$Res> {
+  _$MatchesServiceStateCopyWithImpl(this._self, this._then);
 
-  final MatchServiceState _self;
-  final $Res Function(MatchServiceState) _then;
+  final MatchesServiceState _self;
+  final $Res Function(MatchesServiceState) _then;
 
-/// Create a copy of MatchServiceState
+/// Create a copy of MatchesServiceState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? errorMessage = freezed,Object? matches = null,}) {
   return _then(_self.copyWith(
@@ -74,8 +74,8 @@ as List<TheMatch>,
 }
 
 
-/// Adds pattern-matching-related methods to [MatchServiceState].
-extension MatchServiceStatePatterns on MatchServiceState {
+/// Adds pattern-matching-related methods to [MatchesServiceState].
+extension MatchesServiceStatePatterns on MatchesServiceState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -88,10 +88,10 @@ extension MatchServiceStatePatterns on MatchServiceState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MatchServiceState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MatchesServiceState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _MatchServiceState() when $default != null:
+case _MatchesServiceState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -110,10 +110,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MatchServiceState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MatchesServiceState value)  $default,){
 final _that = this;
 switch (_that) {
-case _MatchServiceState():
+case _MatchesServiceState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -131,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MatchServiceState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MatchesServiceState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _MatchServiceState() when $default != null:
+case _MatchesServiceState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String? errorMessage,  List<TheMatch> matches)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _MatchServiceState() when $default != null:
+case _MatchesServiceState() when $default != null:
 return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
   return orElse();
 
@@ -175,7 +175,7 @@ return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String? errorMessage,  List<TheMatch> matches)  $default,) {final _that = this;
 switch (_that) {
-case _MatchServiceState():
+case _MatchesServiceState():
 return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
   throw StateError('Unexpected subclass');
 
@@ -195,7 +195,7 @@ return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String? errorMessage,  List<TheMatch> matches)?  $default,) {final _that = this;
 switch (_that) {
-case _MatchServiceState() when $default != null:
+case _MatchesServiceState() when $default != null:
 return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
   return null;
 
@@ -207,8 +207,8 @@ return $default(_that.isLoading,_that.errorMessage,_that.matches);case _:
 /// @nodoc
 
 
-class _MatchServiceState implements MatchServiceState {
-  const _MatchServiceState({this.isLoading = false, this.errorMessage = null, final  List<TheMatch> matches = const []}): _matches = matches;
+class _MatchesServiceState implements MatchesServiceState {
+  const _MatchesServiceState({this.isLoading = false, this.errorMessage = null, final  List<TheMatch> matches = const []}): _matches = matches;
   
 
 @override@JsonKey() final  bool isLoading;
@@ -221,17 +221,17 @@ class _MatchServiceState implements MatchServiceState {
 }
 
 
-/// Create a copy of MatchServiceState
+/// Create a copy of MatchesServiceState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$MatchServiceStateCopyWith<_MatchServiceState> get copyWith => __$MatchServiceStateCopyWithImpl<_MatchServiceState>(this, _$identity);
+_$MatchesServiceStateCopyWith<_MatchesServiceState> get copyWith => __$MatchesServiceStateCopyWithImpl<_MatchesServiceState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchServiceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other._matches, _matches));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchesServiceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other._matches, _matches));
 }
 
 
@@ -240,15 +240,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,errorMessage,const DeepCol
 
 @override
 String toString() {
-  return 'MatchServiceState(isLoading: $isLoading, errorMessage: $errorMessage, matches: $matches)';
+  return 'MatchesServiceState(isLoading: $isLoading, errorMessage: $errorMessage, matches: $matches)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$MatchServiceStateCopyWith<$Res> implements $MatchServiceStateCopyWith<$Res> {
-  factory _$MatchServiceStateCopyWith(_MatchServiceState value, $Res Function(_MatchServiceState) _then) = __$MatchServiceStateCopyWithImpl;
+abstract mixin class _$MatchesServiceStateCopyWith<$Res> implements $MatchesServiceStateCopyWith<$Res> {
+  factory _$MatchesServiceStateCopyWith(_MatchesServiceState value, $Res Function(_MatchesServiceState) _then) = __$MatchesServiceStateCopyWithImpl;
 @override @useResult
 $Res call({
  bool isLoading, String? errorMessage, List<TheMatch> matches
@@ -259,17 +259,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$MatchServiceStateCopyWithImpl<$Res>
-    implements _$MatchServiceStateCopyWith<$Res> {
-  __$MatchServiceStateCopyWithImpl(this._self, this._then);
+class __$MatchesServiceStateCopyWithImpl<$Res>
+    implements _$MatchesServiceStateCopyWith<$Res> {
+  __$MatchesServiceStateCopyWithImpl(this._self, this._then);
 
-  final _MatchServiceState _self;
-  final $Res Function(_MatchServiceState) _then;
+  final _MatchesServiceState _self;
+  final $Res Function(_MatchesServiceState) _then;
 
-/// Create a copy of MatchServiceState
+/// Create a copy of MatchesServiceState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? errorMessage = freezed,Object? matches = null,}) {
-  return _then(_MatchServiceState(
+  return _then(_MatchesServiceState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,matches: null == matches ? _self._matches : matches // ignore: cast_nullable_to_non_nullable

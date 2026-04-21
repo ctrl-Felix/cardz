@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class UiCard extends StatelessWidget {
   final Widget child;
-  const UiCard({super.key, required this.child});
+  final bool disablePadding;
+  const UiCard({super.key, required this.child, this.disablePadding = false});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,20 @@ class UiCard extends StatelessWidget {
       color: Colors.white,
       borderRadius: BorderRadius.circular(20),
       elevation: 8, // Android only
-      child: ClipRRect(borderRadius: BorderRadius.circular(20), child: child),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: disablePadding
+              ? EdgeInsetsGeometry.all(0)
+              : const EdgeInsets.only(
+                  top: 16.0,
+                  left: 16,
+                  right: 8,
+                  bottom: 16,
+                ),
+          child: child,
+        ),
+      ),
     );
   }
 }

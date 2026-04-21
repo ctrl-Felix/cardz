@@ -3,7 +3,7 @@ import 'package:doublehead/routing/routes.dart';
 import 'package:doublehead/ui/add/controller/add_match_controller.dart';
 import 'package:doublehead/ui/add/controller/add_player_controller.dart';
 import 'package:doublehead/ui/add/widgets/components/search_player_modal.dart';
-import 'package:doublehead/ui/shared/app_sub_page.dart';
+import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
 import 'package:doublehead/ui/shared/ui_card.dart';
 import 'package:doublehead/ui/shared/ui_carded_list.dart';
 import 'package:doublehead/ui/shared/ui_text.dart';
@@ -36,7 +36,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(addMatchControllerProvider);
     final notifier = ref.read(addMatchControllerProvider.notifier);
-    return AppSubPage(
+    return UiAppSubPage(
       title: "Add Player",
       child: ListView(
         padding: EdgeInsets.all(8),
@@ -105,10 +105,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
           const SizedBox(height: 16),
           if (state.players.isEmpty)
             UiCard(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, top: 16, bottom: 16),
-                child: UiText.caption("You need to add player to your match."),
-              ),
+              child: UiText.caption("You need to add player to your match."),
             ),
           if (state.players.isNotEmpty)
             UiCardedList(

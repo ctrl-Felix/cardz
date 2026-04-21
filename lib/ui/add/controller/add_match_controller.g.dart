@@ -42,7 +42,7 @@ final class AddMatchControllerProvider
 }
 
 String _$addMatchControllerHash() =>
-    r'3439383e7b8a1b1b1dcf60beeda6bd51bdfb10f8';
+    r'914e5afa5c39b91de13654030abf312f637265ee';
 
 abstract class _$AddMatchController extends $Notifier<AddMatchState> {
   AddMatchState build();

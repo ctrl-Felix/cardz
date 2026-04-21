@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 
-import '../../../domain/player/player.dart';
-import '../../../utils/result.dart';
-import '../../source/drift/database.dart';
+import '../../domain/player/player.dart';
+import '../../utils/result.dart';
+import '../source/drift/database.dart';
 
 class PlayerRepository {
   final AppDatabase db;
@@ -26,5 +26,19 @@ class PlayerRepository {
       db.playerTable,
     )..orderBy([(t) => OrderingTerm(expression: t.id)])).get();
     return Result.ok(result.map((e) => e.toPlayer()).toList());
+  }
+
+  Future<Result<Player>> getPlayer(String playerId) async {
+    final result = await (db.select(
+      db.playerTable,
+    )..where((p) => p.id.equals(playerId))).get();
+
+    if (result.length == 1) {
+      return Result.ok(result.first.toPlayer());
+    }
+
+    return Result.error(
+      Exception("No unique entry found, either 0 or multiple results"),
+    );
   }
 }

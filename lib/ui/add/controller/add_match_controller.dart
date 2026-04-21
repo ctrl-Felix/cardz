@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../application/service/match/match_service.dart';
+import '../../../application/service/match/matches_service.dart';
 
 part 'add_match_controller.freezed.dart';
 part 'add_match_controller.g.dart';
@@ -39,8 +39,17 @@ class AddMatchController extends _$AddMatchController {
     );
     switch (result) {
       case Ok<TheMatch>():
+        final matchParticipantRepo = ref.read(
+          matchParticipantRepositoryProvider,
+        );
+        for (Player p in state.players) {
+          matchParticipantRepo.addParticipantToMatch(
+            p.id,
+            result.value.matchId,
+          );
+        }
         state = state.copyWith(isLoading: false, errorMessage: null);
-        ref.read(matchServiceProvider.notifier).loadMatches();
+        ref.read(matchesServiceProvider.notifier).loadMatches();
         return true;
       case Error<TheMatch>():
         state = state.copyWith(

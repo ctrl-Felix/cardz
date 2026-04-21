@@ -41,10 +41,7 @@ class _HomeScreenState extends ConsumerState<HomePlayersScreen> {
           if (state.players.isEmpty)
             UiCard(
               child: Center(
-                child: Padding(
-                  padding: EdgeInsetsGeometry.only(top: 16.0, bottom: 16.0),
-                  child: UiText.caption("You haven't added a player yet."),
-                ),
+                child: UiText.caption("You haven't added a player yet."),
               ),
             ),
 

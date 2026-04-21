@@ -2,7 +2,7 @@ import 'package:doublehead/data/source/drift/database.dart';
 import 'package:doublehead/domain/match/match.dart';
 import 'package:drift/drift.dart';
 
-import '../../../utils/result.dart';
+import '../../utils/result.dart';
 
 class MatchRepository {
   final AppDatabase db;
@@ -36,5 +36,16 @@ class MatchRepository {
       db.matchTable,
     )..orderBy([(t) => OrderingTerm(expression: t.createdAt)])).get();
     return Result.ok(result.map((e) => e.toTheMatch()).toList());
+  }
+
+  Future<Result<TheMatch>> getMatch(String matchId) async {
+    final result = await (db.select(
+      db.matchTable,
+    )..where((m) => m.id.equals(matchId))).getSingleOrNull();
+
+    if (result == null) {
+      return Result.error(Exception("No match found"));
+    }
+    return Result.ok(result.toTheMatch());
   }
 }

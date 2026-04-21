@@ -64,6 +64,21 @@ class UiText extends StatelessWidget {
     );
   }
 
+  // Smaller than title but also bold
+  static Widget heading(String text, {Key? key, TextAlign? textAlign}) {
+    return _StyledUiText(
+      text,
+      key: key,
+      textAlign: textAlign,
+      resolver: (context) => Platform.isIOS
+          ? CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )
+          : Theme.of(context).textTheme.titleLarge!,
+    );
+  }
+
   static Widget caption(String text, {Key? key, TextAlign? textAlign}) {
     return _StyledUiText(
       text,

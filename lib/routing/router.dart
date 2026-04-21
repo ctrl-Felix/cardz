@@ -3,6 +3,7 @@ import 'package:doublehead/ui/add/widgets/add_match_screen.dart';
 import 'package:doublehead/ui/add/widgets/add_player_screen.dart';
 import 'package:doublehead/ui/add/widgets/add_screen.dart';
 import 'package:doublehead/ui/home_wrapper/widgets/home_wrapper_screen.dart';
+import 'package:doublehead/ui/match/widgets/match_screen.dart';
 import 'package:doublehead/ui/players/widgets/home_players_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,5 +42,9 @@ final router = GoRouter(
     ),
     GoRoute(path: Routes.addPlayer, builder: (c, s) => AddPlayerScreen()),
     GoRoute(path: Routes.addMatch, builder: (c, s) => AddMatchScreen()),
+    GoRoute(
+      path: Routes.match,
+      builder: (c, s) => MatchScreen(matchId: s.pathParameters["matchId"]!),
+    ),
   ],
 );

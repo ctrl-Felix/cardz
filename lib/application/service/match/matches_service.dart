@@ -6,25 +6,25 @@ import '../../../config/riverpod_dependencies.dart';
 import '../../../domain/match/match.dart';
 import '../../../utils/result.dart';
 
-part 'match_service.freezed.dart';
-part 'match_service.g.dart';
+part 'matches_service.freezed.dart';
+part 'matches_service.g.dart';
 
 @freezed
-abstract class MatchServiceState with _$MatchServiceState {
-  const factory MatchServiceState({
+abstract class MatchesServiceState with _$MatchesServiceState {
+  const factory MatchesServiceState({
     @Default(false) bool isLoading,
     @Default(null) String? errorMessage,
     @Default([]) List<TheMatch> matches,
-  }) = _MatchServiceState;
+  }) = _MatchesServiceState;
 }
 
 @Riverpod(keepAlive: true)
-class MatchService extends _$MatchService {
+class MatchesService extends _$MatchesService {
   Logger _log = Logger();
 
   @override
-  MatchServiceState build() {
-    return MatchServiceState();
+  MatchesServiceState build() {
+    return MatchesServiceState();
   }
 
   Future<void> loadMatches() async {

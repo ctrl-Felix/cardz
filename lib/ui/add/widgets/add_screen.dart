@@ -1,6 +1,6 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/shared/app_sub_page.dart';
+import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
 import 'package:doublehead/ui/shared/ui_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +11,7 @@ class AddScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppSubPage(
+    return UiAppSubPage(
       title: 'Add',
       child: Padding(
         padding: const EdgeInsets.all(8.0),

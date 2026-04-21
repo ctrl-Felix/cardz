@@ -137,3 +137,100 @@ final class PlayerRepositoryProvider
 }
 
 String _$playerRepositoryHash() => r'067939622f87c3f1ea074baac7d9bf7de68c7c77';
+
+@ProviderFor(matchParticipantRepository)
+final matchParticipantRepositoryProvider =
+    MatchParticipantRepositoryProvider._();
+
+final class MatchParticipantRepositoryProvider
+    extends
+        $FunctionalProvider<
+          MatchParticipantRepository,
+          MatchParticipantRepository,
+          MatchParticipantRepository
+        >
+    with $Provider<MatchParticipantRepository> {
+  MatchParticipantRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'matchParticipantRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$matchParticipantRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<MatchParticipantRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MatchParticipantRepository create(Ref ref) {
+    return matchParticipantRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MatchParticipantRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MatchParticipantRepository>(value),
+    );
+  }
+}
+
+String _$matchParticipantRepositoryHash() =>
+    r'd2fab87f19cf16f81c123aef64be8f04445d8992';
+
+@ProviderFor(matchRoundRepository)
+final matchRoundRepositoryProvider = MatchRoundRepositoryProvider._();
+
+final class MatchRoundRepositoryProvider
+    extends
+        $FunctionalProvider<
+          MatchRoundRepository,
+          MatchRoundRepository,
+          MatchRoundRepository
+        >
+    with $Provider<MatchRoundRepository> {
+  MatchRoundRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'matchRoundRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$matchRoundRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<MatchRoundRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MatchRoundRepository create(Ref ref) {
+    return matchRoundRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MatchRoundRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MatchRoundRepository>(value),
+    );
+  }
+}
+
+String _$matchRoundRepositoryHash() =>
+    r'31d8e41cdf427535d3a7cc6406b19f65b34d59ec';

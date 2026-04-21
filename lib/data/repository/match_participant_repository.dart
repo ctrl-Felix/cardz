@@ -2,8 +2,8 @@ import 'package:doublehead/domain/match/match.dart';
 import 'package:doublehead/utils/result.dart';
 import 'package:drift/drift.dart';
 
-import '../../../domain/player/player.dart';
-import '../../source/drift/database.dart';
+import '../../domain/player/player.dart';
+import '../source/drift/database.dart';
 
 class MatchParticipantRepository {
   final AppDatabase db;
@@ -11,14 +11,12 @@ class MatchParticipantRepository {
   MatchParticipantRepository({required this.db});
 
   Future<Result<void>> addParticipantToMatch(
-    Player player,
-    TheMatch match,
+    String playerId,
+    String matchId,
   ) async {
     final result =
         await (db.select(db.matchParticipantTable)..where(
-              (p) =>
-                  p.playerId.equals(player.id) &
-                  p.matchId.equals(match.matchId),
+              (p) => p.playerId.equals(playerId) & p.matchId.equals(matchId),
             ))
             .get();
 
@@ -28,8 +26,8 @@ class MatchParticipantRepository {
             .into(db.matchParticipantTable)
             .insert(
               MatchParticipantTableCompanion.insert(
-                matchId: match.matchId,
-                playerId: player.id,
+                matchId: matchId,
+                playerId: playerId,
               ),
             );
       } catch (e) {
@@ -56,10 +54,10 @@ class MatchParticipantRepository {
     return result.isNotEmpty;
   }
 
-  Future<List<String>> getParticipantsForMatch(TheMatch match) async {
+  Future<List<String>> getParticipantsForMatch(String matchId) async {
     final result = await (db.select(
       db.matchParticipantTable,
-    )..where((p) => p.matchId.equals(match.matchId))).get();
+    )..where((p) => p.matchId.equals(matchId))).get();
 
     return result.map((m) => m.playerId).toList();
   }
