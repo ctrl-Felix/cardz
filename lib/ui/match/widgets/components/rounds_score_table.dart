@@ -1,4 +1,4 @@
-import 'package:doublehead/application/service/match/matches_service.dart';
+import 'package:doublehead/application/service/matches/matches_service.dart';
 import 'package:doublehead/domain/player/player.dart';
 import 'package:doublehead/ui/match/controller/match_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 
-import '../../../../application/service/match_round/match_round_service.dart';
+import '../../../../application/service/match/match_service.dart';
+import '../../../../application/service/player/player_service.dart';
 import '../../../../domain/match_round/match_round.dart';
+import '../../../../domain/participant/participant.dart';
 import '../../../shared/ui_text.dart';
 
 const double _headerHeight = 32;
@@ -38,11 +40,12 @@ class RoundsScoreTable extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(matchRoundServiceProvider(matchId));
+    final state = ref.watch(matchServiceProvider(matchId));
+
     List<int> playedRoundIds = [];
     Map<String, Map<int, int>> scoresForPlayer = {};
-    for (Player player in state.participants) {
-      scoresForPlayer[player.id] = {};
+    for (Participant participant in state.participants) {
+      scoresForPlayer[participant.player.id] = {};
     }
     for (MatchRound round in state.rounds) {
       if (!playedRoundIds.contains(round.roundId)) {
@@ -81,6 +84,9 @@ class RoundsScoreTable extends ConsumerWidget {
               ),
             ),
           ),
+          if (playedRoundIds
+              .isEmpty) // To avoid shrinking of the right hand header
+            const SizedBox(width: _headerWidth, height: _headerHeight),
         ],
         rightSideChildren: state.participants
             .map(
@@ -93,9 +99,13 @@ class RoundsScoreTable extends ConsumerWidget {
                         child: Align(
                           alignment: Alignment.center,
                           child: UiText.heading(
-                            scoresForPlayer[p.id]!.containsKey(rid)
-                                ? scoresForPlayer[p.id]![rid].toString()
-                                : "0",
+                            scoresForPlayer[p.player.id]!.containsKey(rid)
+                                ? scoresForPlayer[p.player.id]![rid].toString()
+                                : "X",
+                            color:
+                                !scoresForPlayer[p.player.id]!.containsKey(rid)
+                                ? CupertinoColors.inactiveGray
+                                : null,
                           ),
                         ),
                       ),
@@ -111,7 +121,7 @@ class RoundsScoreTable extends ConsumerWidget {
                 height: 32,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: UiText.heading(p.name),
+                  child: UiText.heading(p.player.name),
                 ),
               ),
             )

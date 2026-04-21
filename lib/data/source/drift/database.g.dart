@@ -596,8 +596,40 @@ class $MatchParticipantTableTable extends MatchParticipantTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _isHiddenMeta = const VerificationMeta(
+    'isHidden',
+  );
   @override
-  List<GeneratedColumn> get $columns => [matchId, playerId];
+  late final GeneratedColumn<bool> isHidden = GeneratedColumn<bool>(
+    'is_hidden',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_hidden" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: () => DateTime.now(),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    matchId,
+    playerId,
+    isHidden,
+    createdAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -626,6 +658,18 @@ class $MatchParticipantTableTable extends MatchParticipantTable
     } else if (isInserting) {
       context.missing(_playerIdMeta);
     }
+    if (data.containsKey('is_hidden')) {
+      context.handle(
+        _isHiddenMeta,
+        isHidden.isAcceptableOrUnknown(data['is_hidden']!, _isHiddenMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
     return context;
   }
 
@@ -646,6 +690,14 @@ class $MatchParticipantTableTable extends MatchParticipantTable
         DriftSqlType.string,
         data['${effectivePrefix}player_id'],
       )!,
+      isHidden: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_hidden'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
     );
   }
 
@@ -659,15 +711,21 @@ class MatchParticipantTableData extends DataClass
     implements Insertable<MatchParticipantTableData> {
   final String matchId;
   final String playerId;
+  final bool isHidden;
+  final DateTime createdAt;
   const MatchParticipantTableData({
     required this.matchId,
     required this.playerId,
+    required this.isHidden,
+    required this.createdAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['match_id'] = Variable<String>(matchId);
     map['player_id'] = Variable<String>(playerId);
+    map['is_hidden'] = Variable<bool>(isHidden);
+    map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
 
@@ -675,6 +733,8 @@ class MatchParticipantTableData extends DataClass
     return MatchParticipantTableCompanion(
       matchId: Value(matchId),
       playerId: Value(playerId),
+      isHidden: Value(isHidden),
+      createdAt: Value(createdAt),
     );
   }
 
@@ -686,6 +746,8 @@ class MatchParticipantTableData extends DataClass
     return MatchParticipantTableData(
       matchId: serializer.fromJson<String>(json['matchId']),
       playerId: serializer.fromJson<String>(json['playerId']),
+      isHidden: serializer.fromJson<bool>(json['isHidden']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
   @override
@@ -694,20 +756,30 @@ class MatchParticipantTableData extends DataClass
     return <String, dynamic>{
       'matchId': serializer.toJson<String>(matchId),
       'playerId': serializer.toJson<String>(playerId),
+      'isHidden': serializer.toJson<bool>(isHidden),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
-  MatchParticipantTableData copyWith({String? matchId, String? playerId}) =>
-      MatchParticipantTableData(
-        matchId: matchId ?? this.matchId,
-        playerId: playerId ?? this.playerId,
-      );
+  MatchParticipantTableData copyWith({
+    String? matchId,
+    String? playerId,
+    bool? isHidden,
+    DateTime? createdAt,
+  }) => MatchParticipantTableData(
+    matchId: matchId ?? this.matchId,
+    playerId: playerId ?? this.playerId,
+    isHidden: isHidden ?? this.isHidden,
+    createdAt: createdAt ?? this.createdAt,
+  );
   MatchParticipantTableData copyWithCompanion(
     MatchParticipantTableCompanion data,
   ) {
     return MatchParticipantTableData(
       matchId: data.matchId.present ? data.matchId.value : this.matchId,
       playerId: data.playerId.present ? data.playerId.value : this.playerId,
+      isHidden: data.isHidden.present ? data.isHidden.value : this.isHidden,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
 
@@ -715,45 +787,59 @@ class MatchParticipantTableData extends DataClass
   String toString() {
     return (StringBuffer('MatchParticipantTableData(')
           ..write('matchId: $matchId, ')
-          ..write('playerId: $playerId')
+          ..write('playerId: $playerId, ')
+          ..write('isHidden: $isHidden, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(matchId, playerId);
+  int get hashCode => Object.hash(matchId, playerId, isHidden, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MatchParticipantTableData &&
           other.matchId == this.matchId &&
-          other.playerId == this.playerId);
+          other.playerId == this.playerId &&
+          other.isHidden == this.isHidden &&
+          other.createdAt == this.createdAt);
 }
 
 class MatchParticipantTableCompanion
     extends UpdateCompanion<MatchParticipantTableData> {
   final Value<String> matchId;
   final Value<String> playerId;
+  final Value<bool> isHidden;
+  final Value<DateTime> createdAt;
   final Value<int> rowid;
   const MatchParticipantTableCompanion({
     this.matchId = const Value.absent(),
     this.playerId = const Value.absent(),
+    this.isHidden = const Value.absent(),
+    this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MatchParticipantTableCompanion.insert({
     required String matchId,
     required String playerId,
+    this.isHidden = const Value.absent(),
+    this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : matchId = Value(matchId),
        playerId = Value(playerId);
   static Insertable<MatchParticipantTableData> custom({
     Expression<String>? matchId,
     Expression<String>? playerId,
+    Expression<bool>? isHidden,
+    Expression<DateTime>? createdAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (matchId != null) 'match_id': matchId,
       if (playerId != null) 'player_id': playerId,
+      if (isHidden != null) 'is_hidden': isHidden,
+      if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -761,11 +847,15 @@ class MatchParticipantTableCompanion
   MatchParticipantTableCompanion copyWith({
     Value<String>? matchId,
     Value<String>? playerId,
+    Value<bool>? isHidden,
+    Value<DateTime>? createdAt,
     Value<int>? rowid,
   }) {
     return MatchParticipantTableCompanion(
       matchId: matchId ?? this.matchId,
       playerId: playerId ?? this.playerId,
+      isHidden: isHidden ?? this.isHidden,
+      createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -779,6 +869,12 @@ class MatchParticipantTableCompanion
     if (playerId.present) {
       map['player_id'] = Variable<String>(playerId.value);
     }
+    if (isHidden.present) {
+      map['is_hidden'] = Variable<bool>(isHidden.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -790,6 +886,8 @@ class MatchParticipantTableCompanion
     return (StringBuffer('MatchParticipantTableCompanion(')
           ..write('matchId: $matchId, ')
           ..write('playerId: $playerId, ')
+          ..write('isHidden: $isHidden, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1527,12 +1625,16 @@ typedef $$MatchParticipantTableTableCreateCompanionBuilder =
     MatchParticipantTableCompanion Function({
       required String matchId,
       required String playerId,
+      Value<bool> isHidden,
+      Value<DateTime> createdAt,
       Value<int> rowid,
     });
 typedef $$MatchParticipantTableTableUpdateCompanionBuilder =
     MatchParticipantTableCompanion Function({
       Value<String> matchId,
       Value<String> playerId,
+      Value<bool> isHidden,
+      Value<DateTime> createdAt,
       Value<int> rowid,
     });
 
@@ -1552,6 +1654,16 @@ class $$MatchParticipantTableTableFilterComposer
 
   ColumnFilters<String> get playerId => $composableBuilder(
     column: $table.playerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isHidden => $composableBuilder(
+    column: $table.isHidden,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1574,6 +1686,16 @@ class $$MatchParticipantTableTableOrderingComposer
     column: $table.playerId,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isHidden => $composableBuilder(
+    column: $table.isHidden,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$MatchParticipantTableTableAnnotationComposer
@@ -1590,6 +1712,12 @@ class $$MatchParticipantTableTableAnnotationComposer
 
   GeneratedColumn<String> get playerId =>
       $composableBuilder(column: $table.playerId, builder: (column) => column);
+
+  GeneratedColumn<bool> get isHidden =>
+      $composableBuilder(column: $table.isHidden, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
 class $$MatchParticipantTableTableTableManager
@@ -1640,20 +1768,28 @@ class $$MatchParticipantTableTableTableManager
               ({
                 Value<String> matchId = const Value.absent(),
                 Value<String> playerId = const Value.absent(),
+                Value<bool> isHidden = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MatchParticipantTableCompanion(
                 matchId: matchId,
                 playerId: playerId,
+                isHidden: isHidden,
+                createdAt: createdAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String matchId,
                 required String playerId,
+                Value<bool> isHidden = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MatchParticipantTableCompanion.insert(
                 matchId: matchId,
                 playerId: playerId,
+                isHidden: isHidden,
+                createdAt: createdAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

@@ -16,6 +16,7 @@ class AddScreen extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: UiCard(
+          disablePadding: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

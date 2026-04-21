@@ -59,4 +59,35 @@ class MatchRoundRepository {
       );
     }
   }
+
+  Future<Result<List<String>>> getPlayerIdsWhichHaveRound(
+    String matchId,
+  ) async {
+    try {
+      final result = await (db.select(
+        db.matchRoundTable,
+      )..where((r) => r.matchId.equals(matchId))).get();
+
+      return Result.ok(result.map((r) => r.playerId).toSet().toList());
+    } catch (e) {
+      return Result.error(
+        Exception(
+          "Error while parsing player ids that participated in match round",
+        ),
+      );
+    }
+  }
+
+  Future<Result<void>> removeAllMatchRoundsForMatch(String matchId) async {
+    try {
+      await (db.delete(
+        db.matchRoundTable,
+      )..where((p) => p.matchId.equals(matchId))).go();
+    } catch (e) {
+      return Result.error(
+        Exception("Error while deleting match rounds for match $matchId"),
+      );
+    }
+    return Result.ok(null);
+  }
 }

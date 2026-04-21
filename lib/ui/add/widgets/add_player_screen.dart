@@ -47,7 +47,7 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
           AdaptiveButton(
             onPressed: () async {
               if (await notifier.addPlayer(inputName) && context.mounted) {
-                context.go(Routes.home);
+                context.go(Routes.players);
               }
             },
             label: "Add",

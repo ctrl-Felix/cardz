@@ -58,7 +58,7 @@ final class MatchControllerProvider
   }
 }
 
-String _$matchControllerHash() => r'7ed59bdf221fa11e8fff4cba7d4384272124b2ac';
+String _$matchControllerHash() => r'034eac71098bcdf7932c82c2fc6c5dfe06105849';
 
 final class MatchControllerFamily extends $Family
     with

@@ -1,4 +1,4 @@
-import 'package:doublehead/application/service/match_round/match_round_service.dart';
+import 'package:doublehead/application/service/match/match_service.dart';
 import 'package:doublehead/config/riverpod_dependencies.dart';
 import 'package:doublehead/domain/player/player.dart';
 import 'package:doublehead/utils/result.dart';
@@ -31,9 +31,7 @@ class MatchController extends _$MatchController {
   Future<void> addMatchRound(Map<String, int> scores) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     final matchRoundRepo = ref.read(matchRoundRepositoryProvider);
-    final matchRoundService = ref.read(
-      matchRoundServiceProvider(matchId).notifier,
-    );
+    final matchRoundService = ref.read(matchServiceProvider(matchId).notifier);
     final roundIdResult = await matchRoundRepo.getMaxRoundId(matchId);
     late int roundId;
     switch (roundIdResult) {

@@ -50,7 +50,12 @@ class UiText extends StatelessWidget {
     );
   }
 
-  static Widget subtitle(String text, {Key? key, TextAlign? textAlign}) {
+  static Widget subtitle(
+    String text, {
+    Key? key,
+    TextAlign? textAlign,
+    Color? color,
+  }) {
     return _StyledUiText(
       text,
       key: key,
@@ -59,13 +64,19 @@ class UiText extends StatelessWidget {
           ? CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w300,
+              color: color,
             )
           : Theme.of(context).textTheme.titleSmall!,
     );
   }
 
   // Smaller than title but also bold
-  static Widget heading(String text, {Key? key, TextAlign? textAlign}) {
+  static Widget heading(
+    String text, {
+    Key? key,
+    TextAlign? textAlign,
+    Color? color,
+  }) {
     return _StyledUiText(
       text,
       key: key,
@@ -74,22 +85,55 @@ class UiText extends StatelessWidget {
           ? CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: color,
             )
           : Theme.of(context).textTheme.titleLarge!,
     );
   }
 
-  static Widget caption(String text, {Key? key, TextAlign? textAlign}) {
+  // Title used in List Item
+  static Widget listTitle(
+    String text, {
+    Key? key,
+    TextAlign? textAlign,
+    Color? color,
+  }) {
+    return _StyledUiText(
+      text,
+      key: key,
+      textAlign: textAlign,
+      resolver: (context) => Platform.isIOS
+          ? CupertinoTheme.of(
+              context,
+            ).textTheme.textStyle.copyWith(color: color)
+          : Theme.of(context).textTheme.titleLarge!,
+    );
+  }
+
+  static Widget body(String text, {Key? key, TextAlign? textAlign}) {
+    return _StyledUiText(
+      text,
+      key: key,
+      textAlign: textAlign,
+      resolver: (context) => Platform.isIOS
+          ? CupertinoTheme.of(
+              context,
+            ).textTheme.textStyle.copyWith(fontSize: 16)
+          : Theme.of(context).textTheme.bodyMedium!,
+    );
+  }
+
+  static Widget bodyLight(String text, {Key? key, TextAlign? textAlign}) {
     return _StyledUiText(
       text,
       key: key,
       textAlign: textAlign,
       resolver: (context) => Platform.isIOS
           ? CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              fontSize: 14,
+              fontSize: 16,
               color: CupertinoColors.secondaryLabel,
             )
-          : Theme.of(context).textTheme.bodySmall!,
+          : Theme.of(context).textTheme.bodyMedium!,
     );
   }
 

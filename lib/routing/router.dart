@@ -8,6 +8,8 @@ import 'package:doublehead/ui/players/widgets/home_players_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/home/widgets/home_screen.dart';
+import '../ui/match/subscreens/manage_players_screen.dart';
+import '../ui/player/player_screen.dart';
 
 final router = GoRouter(
   initialLocation: Routes.home,
@@ -30,6 +32,13 @@ final router = GoRouter(
             GoRoute(
               path: Routes.players, // you'll need this route
               builder: (context, state) => HomePlayersScreen(),
+              routes: [
+                GoRoute(
+                  path: Routes.playerRelative,
+                  builder: (context, state) =>
+                      PlayerScreen(playerId: state.pathParameters["playerId"]!),
+                ),
+              ],
             ),
           ],
         ),
@@ -45,6 +54,12 @@ final router = GoRouter(
     GoRoute(
       path: Routes.match,
       builder: (c, s) => MatchScreen(matchId: s.pathParameters["matchId"]!),
+      routes: [],
+    ),
+    GoRoute(
+      path: Routes.matchManagePlayers,
+      builder: (c, s) =>
+          ManagePlayersScreen(matchId: s.pathParameters["matchId"]!),
     ),
   ],
 );

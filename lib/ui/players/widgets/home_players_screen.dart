@@ -1,10 +1,13 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
+import 'package:doublehead/routing/routes.dart';
 import 'package:doublehead/ui/players/controller/player_controller.dart';
 import 'package:doublehead/ui/shared/app_app_bar.dart';
 import 'package:doublehead/ui/shared/ui_card.dart';
+import 'package:doublehead/ui/shared/ui_carded_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../application/service/player/player_service.dart';
 import '../../shared/ui_text.dart';
@@ -41,29 +44,23 @@ class _HomeScreenState extends ConsumerState<HomePlayersScreen> {
           if (state.players.isEmpty)
             UiCard(
               child: Center(
-                child: UiText.caption("You haven't added a player yet."),
+                child: UiText.body("You haven't added a player yet."),
               ),
             ),
 
           if (state.players.isNotEmpty)
-            AdaptiveCard(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              elevation: 8, // Android only
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Column(
-                  children: state.players.indexed.map((record) {
-                    final (index, item) = record;
-                    return AdaptiveListTile(
-                      title: Text(item.name),
-                      subtitle: Text("Match Count: 0"),
-                      trailing: Icon(CupertinoIcons.chevron_right),
-                      showDivider: index != state.players.length - 1,
-                    );
-                  }).toList(),
-                ),
-              ),
+            UiCardedList(
+              items: state.players.indexed.map((record) {
+                final (index, item) = record;
+                return UiCardedListItem(
+                  title: item.name,
+                  trailing: Icon(CupertinoIcons.chevron_right),
+                  subtitle: "Banana",
+                  onTap: () {
+                    context.push(Routes.playerPath(item.id));
+                  },
+                );
+              }).toList(),
             ),
         ],
       ),

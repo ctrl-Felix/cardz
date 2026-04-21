@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../application/service/match/matches_service.dart';
+import '../../../application/service/matches/matches_service.dart';
 
 part 'add_match_controller.freezed.dart';
 part 'add_match_controller.g.dart';

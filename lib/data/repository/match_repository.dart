@@ -48,4 +48,29 @@ class MatchRepository {
     }
     return Result.ok(result.toTheMatch());
   }
+
+  Future<Result<void>> completeMatch(String matchId) async {
+    final result =
+        await (db.update(
+          db.matchTable,
+        )..where((p) => p.id.equals(matchId))).write(
+          MatchTableCompanion(status: Value(MATCHSTATUS.FINISHED.toString())),
+        );
+
+    if (result == 0) {
+      return Result.error(Exception("No rows updated on complete Match"));
+    }
+    return Result.ok(null);
+  }
+
+  Future<Result<void>> removeMatch(String matchId) async {
+    try {
+      await (db.delete(db.matchTable)..where((p) => p.id.equals(matchId))).go();
+    } catch (e) {
+      return Result.error(
+        Exception("Error while deleting match rounds for match $matchId"),
+      );
+    }
+    return Result.ok(null);
+  }
 }

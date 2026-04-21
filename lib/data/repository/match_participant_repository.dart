@@ -40,6 +40,31 @@ class MatchParticipantRepository {
     return Result.error(Exception("Participant already added"));
   }
 
+  Future<Result<void>> removeParticipantFromMatch(
+    String playerId,
+    String matchId,
+  ) async {
+    final result =
+        await (db.select(db.matchParticipantTable)..where(
+              (p) => p.playerId.equals(playerId) & p.matchId.equals(matchId),
+            ))
+            .get();
+
+    if (result.isEmpty) {
+      return Result.error(Exception("Participant not found"));
+    }
+
+    try {
+      await (db.delete(db.matchParticipantTable)..where(
+            (p) => p.playerId.equals(playerId) & p.matchId.equals(matchId),
+          ))
+          .go();
+    } catch (e) {
+      return Result.error(Exception("Error while deleting match participant"));
+    }
+    return Result.ok(null);
+  }
+
   Future<bool> checkIfPlayerParticipantOfMatch(
     Player player,
     TheMatch match,
@@ -55,10 +80,48 @@ class MatchParticipantRepository {
   }
 
   Future<List<String>> getParticipantsForMatch(String matchId) async {
+    final result =
+        await (db.select(db.matchParticipantTable)
+              ..where((p) => p.matchId.equals(matchId))
+              ..orderBy([(p) => OrderingTerm.asc(p.createdAt)]))
+            .get();
+    return result.map((m) => m.playerId).toList();
+  }
+
+  Future<Map<String, bool>> getVisibilityForMatch(String matchId) async {
     final result = await (db.select(
       db.matchParticipantTable,
     )..where((p) => p.matchId.equals(matchId))).get();
 
-    return result.map((m) => m.playerId).toList();
+    return {for (var x in result) x.playerId: x.isHidden};
+  }
+
+  Future<void> setParticipantVisibility(
+    String matchId,
+    String playerId,
+    bool isHidden,
+  ) async {
+    final result =
+        await (db.update(db.matchParticipantTable)..where(
+              (p) => p.matchId.equals(matchId) & p.playerId.equals(playerId),
+            ))
+            .write(MatchParticipantTableCompanion(isHidden: Value(isHidden)));
+
+    if (result == 0) {
+      throw Exception("Error while updating usr visibility, no row changes");
+    }
+  }
+
+  Future<Result<void>> removeAllParticipantsFromMatch(String matchId) async {
+    try {
+      await (db.delete(
+        db.matchParticipantTable,
+      )..where((p) => p.matchId.equals(matchId))).go();
+    } catch (e) {
+      return Result.error(
+        Exception("Error while deleting match rounds for match $matchId"),
+      );
+    }
+    return Result.ok(null);
   }
 }

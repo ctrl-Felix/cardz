@@ -58,7 +58,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
             },
           ),
           const SizedBox(height: 16),
-          UiText.title("Description (Optional)"),
+          /*UiText.title("Description (Optional)"),
           const SizedBox(height: 8),
           AdaptiveTextField(
             style: TextStyle(fontSize: 18),
@@ -75,7 +75,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
               });
             },
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 16),*/
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -105,7 +105,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
           const SizedBox(height: 16),
           if (state.players.isEmpty)
             UiCard(
-              child: UiText.caption("You need to add player to your match."),
+              child: UiText.bodyLight("You need to add player to your match."),
             ),
           if (state.players.isNotEmpty)
             UiCardedList(

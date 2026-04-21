@@ -1,7 +1,11 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/application/service/match/matches_service.dart';
-import 'package:doublehead/application/service/match_round/match_round_service.dart';
+import 'package:doublehead/application/service/matches/matches_service.dart';
+import 'package:doublehead/application/service/match/match_service.dart';
+import 'package:doublehead/domain/match/match.dart';
+import 'package:doublehead/domain/participant/participant.dart';
+import 'package:doublehead/routing/routes.dart';
 import 'package:doublehead/ui/match/controller/match_controller.dart';
+import 'package:doublehead/ui/match/widgets/components/new_round_widget.dart';
 import 'package:doublehead/ui/match/widgets/components/rounds_score_table.dart';
 import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
 import 'package:doublehead/ui/shared/ui_card.dart';
@@ -9,6 +13,7 @@ import 'package:doublehead/ui/shared/ui_carded_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:logger/logger.dart';
@@ -27,46 +32,73 @@ class MatchScreen extends ConsumerStatefulWidget {
 
 class _MatchScreenState extends ConsumerState<MatchScreen> {
   int _overviewTab = 0;
-  int _managementTab = 0;
 
   Map<String, TextEditingController> _controllers = {};
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await ref.read(matchRoundServiceProvider(widget.matchId).notifier).load();
-      setState(() {
-        _controllers = {
-          for (Player participant
-              in ref
-                  .read(matchRoundServiceProvider(widget.matchId))
-                  .participants)
-            participant.id: TextEditingController(),
-        };
-      });
+      await ref.read(matchServiceProvider(widget.matchId).notifier).load();
     });
   }
 
-  void _createNewRound() {
-    final controllerNotifier = ref.read(
-      matchControllerProvider(widget.matchId).notifier,
+  void _showCompleteMatchAlert() {
+    final notifier = ref.read(matchServiceProvider(widget.matchId).notifier);
+    AdaptiveAlertDialog.show(
+      context: context,
+      title: 'Complete Match',
+      message:
+          "By confirming you will complete this match. You won't be able to modify scores after completing the match.",
+      icon: '',
+      actions: [
+        AlertAction(
+          title: 'Cancel',
+          style: AlertActionStyle.cancel,
+          onPressed: () {},
+        ),
+        AlertAction(
+          title: 'Confirm',
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            notifier.completeMatch();
+          },
+        ),
+      ],
     );
+  }
 
-    controllerNotifier.addMatchRound(
-      _controllers.map(
-        (pid, controller) => MapEntry(pid, int.tryParse(controller.text) ?? 0),
-      ),
+  void _showDeleteMatchAlert() {
+    final notifier = ref.read(matchServiceProvider(widget.matchId).notifier);
+    AdaptiveAlertDialog.show(
+      context: context,
+      title: 'Delete Match',
+      message:
+          "By confirming you will delete this match. THIS ACTION IS NOT REVERSIBLE. You will loose all entered data.",
+      icon: '',
+      actions: [
+        AlertAction(
+          title: 'Cancel',
+          style: AlertActionStyle.cancel,
+          onPressed: () {},
+        ),
+        AlertAction(
+          title: 'Delete',
+          style: AlertActionStyle.cancel,
+          onPressed: () {
+            notifier.deleteMatch();
+            context.go(Routes.home);
+          },
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(matchRoundServiceProvider(widget.matchId));
+    final state = ref.watch(matchServiceProvider(widget.matchId));
     final controllerState = ref.watch(matchControllerProvider(widget.matchId));
 
-    if (state.isLoading ||
-        state.match == null ||
-        (state.participants.length != _controllers.length)) {
+    if (state.isLoading || state.match == null) {
       return AdaptiveScaffold(
         appBar: AdaptiveAppBar(title: "Match"),
         body: Center(
@@ -109,102 +141,52 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
           if (_overviewTab == 1)
             UiCard(child: RoundsScoreTable(matchId: widget.matchId)),
           const SizedBox(height: 8),
-          UiText.title("New Round"),
 
           const SizedBox(height: 8),
+          if (state.match!.status == MATCHSTATUS.ONGOING) ...[
+            UiText.title("New Round"),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: NewRoundWidget(matchId: widget.matchId),
+            ),
+          ],
 
-          UiCardedList(
-            items: state.participants
-                .map(
-                  (p) => UiCardedListItem(
-                    title: p.name,
-                    trailing: SizedBox(
-                      width: 120,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 32,
-                            height: 32,
-                            child: AdaptiveButton.icon(
-                              style: AdaptiveButtonStyle.bordered,
-                              onPressed: () {
-                                int? currentScore =
-                                    int.tryParse(_controllers[p.id]!.text) ?? 0;
-
-                                _controllers[p.id]!.text = (currentScore - 1)
-                                    .toString();
-                              },
-                              icon: Icons.remove,
-                            ),
-                          ),
-                          const SizedBox(width: 2),
-
-                          Container(
-                            width: 48,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade400),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsetsGeometry.only(left: 1),
-                              child: AdaptiveTextField(
-                                textAlign: TextAlign.center,
-                                placeholder: "0",
-                                keyboardType: TextInputType.number,
-                                controller: _controllers[p.id],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 2),
-
-                          SizedBox(
-                            width: 32,
-                            height: 32,
-                            child: AdaptiveButton.icon(
-                              style: AdaptiveButtonStyle.bordered,
-                              onPressed: () {
-                                int? currentScore =
-                                    int.tryParse(_controllers[p.id]!.text) ?? 0;
-
-                                _controllers[p.id]!.text = (currentScore + 1)
-                                    .toString();
-                              },
-                              icon: Icons.add,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-          const SizedBox(height: 8),
-          AdaptiveButton(onPressed: _createNewRound, label: "Add"),
-          const SizedBox(height: 8),
-          UiText.title("Actions"),
-          const SizedBox(height: 8),
-          UiCardedList(
-            items: [
-              UiCardedListItem(
-                title: "Manage players",
-                subtitle: "Add players or mark users as inactive",
-              ),
-              UiCardedListItem(
-                title: "Complete Match",
-                subtitle:
-                    "Once you are done complete the match to calculate the final stats",
-              ),
-              UiCardedListItem(
-                title: "Delete Match",
-                subtitle:
-                    "You can delete the match. If you decide to do so keep in mind, that it's not recoverable",
-              ),
-            ],
-          ),
+          if (state.match!.status == MATCHSTATUS.ONGOING) ...[
+            UiText.title("Actions"),
+            UiCardedList(
+              items: [
+                UiCardedListItem(
+                  title: "Manage players",
+                  subtitle: "Add players or mark users as inactive",
+                  color: CupertinoColors.systemBlue,
+                  onTap: () {
+                    context.push(Routes.matchManagePlayersPath(widget.matchId));
+                  },
+                ),
+                UiCardedListItem(
+                  title: "Complete Match",
+                  subtitle:
+                      "Once you are done complete the match to calculate the final stats",
+                  color: CupertinoColors.systemGreen,
+                  onTap: _showCompleteMatchAlert,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            UiText.title("Danger Zone"),
+            const SizedBox(height: 8),
+            UiCardedList(
+              items: [
+                UiCardedListItem(
+                  title: "Delete Match",
+                  subtitle:
+                      "You can delete the match. If you decide to do so keep in mind, that it's not recoverable",
+                  onTap: _showDeleteMatchAlert,
+                  color: CupertinoColors.systemRed,
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );

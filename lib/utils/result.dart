@@ -22,3 +22,10 @@ final class Error<T> extends Result<T> {
   /// Returned error in result
   final Exception error;
 }
+
+extension ResultUnwrap<T> on Result<T> {
+  T unwrap() => switch (this) {
+    Ok<T>(:final value) => value,
+    Error<T>(:final error) => throw error,
+  };
+}
