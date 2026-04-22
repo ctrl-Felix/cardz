@@ -15,9 +15,6 @@ AdaptiveAppBar adaptiveAppBar(BuildContext context) {
         onPressed: () => context.push(Routes.add),
       ),
     ],
-    cupertinoNavigationBar: CupertinoNavigationBar(
-      middle: UiText.subtitle("Cardz"),
-    ),
     useNativeToolbar: true,
   );
 }

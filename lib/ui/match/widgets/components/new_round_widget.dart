@@ -69,6 +69,7 @@ class _NewRoundWidgetState extends ConsumerState<NewRoundWidget> {
                           height: 32,
                           child: AdaptiveButton.icon(
                             style: AdaptiveButtonStyle.bordered,
+                            padding: EdgeInsetsGeometry.all(0),
                             onPressed: () {
                               int? currentScore =
                                   int.tryParse(
@@ -109,6 +110,7 @@ class _NewRoundWidgetState extends ConsumerState<NewRoundWidget> {
                           height: 32,
                           child: AdaptiveButton.icon(
                             style: AdaptiveButtonStyle.bordered,
+                            padding: EdgeInsetsGeometry.all(0),
                             onPressed: () {
                               int? currentScore =
                                   int.tryParse(
@@ -119,7 +121,7 @@ class _NewRoundWidgetState extends ConsumerState<NewRoundWidget> {
                               _controllers[p.player.id]!.text =
                                   (currentScore + 1).toString();
                             },
-                            icon: Icons.add,
+                            icon: CupertinoIcons.add,
                           ),
                         ),
                       ],
@@ -130,7 +132,11 @@ class _NewRoundWidgetState extends ConsumerState<NewRoundWidget> {
               .toList(),
         ),
         const SizedBox(height: 8),
-        AdaptiveButton(onPressed: _createNewRound, label: "Add"),
+        AdaptiveButton(
+          onPressed: _createNewRound,
+          label: "Add",
+          minSize: Size(double.infinity, 0),
+        ),
       ],
     );
   }

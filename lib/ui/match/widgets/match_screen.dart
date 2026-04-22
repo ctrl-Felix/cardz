@@ -5,6 +5,7 @@ import 'package:doublehead/domain/match/match.dart';
 import 'package:doublehead/domain/participant/participant.dart';
 import 'package:doublehead/routing/routes.dart';
 import 'package:doublehead/ui/match/controller/match_controller.dart';
+import 'package:doublehead/ui/match/widgets/components/leaderboard_widget.dart';
 import 'package:doublehead/ui/match/widgets/components/new_round_widget.dart';
 import 'package:doublehead/ui/match/widgets/components/rounds_score_table.dart';
 import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
@@ -96,9 +97,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(matchServiceProvider(widget.matchId));
-    final controllerState = ref.watch(matchControllerProvider(widget.matchId));
 
-    if (state.isLoading || state.match == null) {
+    if (state.isLoading || state.match == null || false) {
       return AdaptiveScaffold(
         appBar: AdaptiveAppBar(title: "Match"),
         body: Center(
@@ -118,7 +118,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
           const SizedBox(height: 8),
           AdaptiveSegmentedControl(
             labels: ['Leaderboard', 'Rounds'],
-            selectedIndex: 0,
+            selectedIndex: _overviewTab,
             onValueChanged: (index) {
               setState(() {
                 _overviewTab = index;
@@ -126,18 +126,20 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
             },
           ),
           const SizedBox(height: 8),
-          if (_overviewTab == 0)
-            UiCardedList(
-              items: state.leaderboard
-                  .map(
-                    (l) => UiCardedListItem(
-                      title: l.player.name,
-                      leading: UiText.subtitle("${l.rank.toString()}."),
-                      trailing: UiText.subtitle(l.score.toString()),
-                    ),
-                  )
-                  .toList(),
-            ),
+          UiCardedList(
+            items: [
+              UiCardedListItem(
+                title: "Manage players",
+                subtitle: "Add players or mark users as inactive",
+                color: CupertinoColors.systemBlue,
+                onTap: () {
+                  context.push(Routes.matchManagePlayersPath(widget.matchId));
+                },
+              ),
+            ],
+          ),
+          if (_overviewTab == 0) LeaderboardWidget(matchId: widget.matchId),
+
           if (_overviewTab == 1)
             UiCard(child: RoundsScoreTable(matchId: widget.matchId)),
           const SizedBox(height: 8),

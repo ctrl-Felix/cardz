@@ -41,4 +41,17 @@ class PlayerRepository {
       Exception("No unique entry found, either 0 or multiple results"),
     );
   }
+
+  Future<Result<void>> updatePlayerName(String playerId, String newName) async {
+    final result =
+        await (db.update(db.playerTable)..where((p) => p.id.equals(playerId)))
+            .write(PlayerTableCompanion(name: Value(newName)));
+
+    if (result != 1) {
+      return Result.error(
+        Exception("Error while updating, either no row updated or more than 1"),
+      );
+    }
+    return Result.ok(null);
+  }
 }

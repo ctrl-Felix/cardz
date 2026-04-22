@@ -5,6 +5,7 @@ import 'package:doublehead/ui/add/widgets/add_screen.dart';
 import 'package:doublehead/ui/home_wrapper/widgets/home_wrapper_screen.dart';
 import 'package:doublehead/ui/match/widgets/match_screen.dart';
 import 'package:doublehead/ui/players/widgets/home_players_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/home/widgets/home_screen.dart';

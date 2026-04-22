@@ -9,11 +9,12 @@ class UiAppSubPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double topPadding = PlatformInfo.isIOS26OrHigher() ? 64.0 : 8.0;
     return AdaptiveScaffold(
       appBar: AdaptiveAppBar(title: title, actions: []),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 64.0, left: 8.0, right: 8.0),
+          padding: EdgeInsets.only(top: topPadding, left: 8.0, right: 8.0),
           child: child,
         ),
       ),

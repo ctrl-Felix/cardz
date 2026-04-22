@@ -38,4 +38,20 @@ class PlayerController extends _$PlayerController {
     }
     state = state.copyWith(isLoading: false);
   }
+
+  Future<void> updatePlayerName(String newName) async {
+    if (state.player == null) {
+      return;
+    }
+
+    final repo = ref.read(playerRepositoryProvider);
+    final result = await repo.updatePlayerName(state.player!.id, newName);
+    switch (result) {
+      case Ok<void>():
+        await loadPlayer(state.player!.id);
+        break;
+      case Error<void>():
+        state = state.copyWith(errorMessage: "error.update_user");
+    }
+  }
 }
