@@ -1,5 +1,5 @@
-import 'package:doublehead/config/riverpod_dependencies.dart';
-import 'package:doublehead/domain/player/player.dart';
+import 'package:cardcrew/config/riverpod_dependencies.dart';
+import 'package:cardcrew/domain/player/player.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

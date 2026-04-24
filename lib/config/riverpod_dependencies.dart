@@ -1,6 +1,6 @@
-import 'package:doublehead/data/repository/match_participant_repository.dart';
-import 'package:doublehead/data/repository/match_round_repository.dart';
-import 'package:doublehead/data/source/drift/database.dart';
+import 'package:cardcrew/data/repository/match_participant_repository.dart';
+import 'package:cardcrew/data/repository/match_round_repository.dart';
+import 'package:cardcrew/data/source/drift/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/repository/match_repository.dart';

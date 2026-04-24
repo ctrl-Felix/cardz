@@ -9,11 +9,16 @@ class PlayerRepository {
 
   PlayerRepository({required this.db});
 
-  Future<Result<Player>> createPlayer(String name) async {
+  Future<Result<Player>> createPlayer(
+    String name, {
+    bool isOwner = false,
+  }) async {
     try {
       final result = await db
           .into(db.playerTable)
-          .insertReturning(PlayerTableCompanion.insert(name: name));
+          .insertReturning(
+            PlayerTableCompanion.insert(name: name, isOwner: Value(isOwner)),
+          );
 
       return Result.ok(result.toPlayer());
     } catch (e) {
@@ -40,6 +45,20 @@ class PlayerRepository {
     return Result.error(
       Exception("No unique entry found, either 0 or multiple results"),
     );
+  }
+
+  Future<Result<Player>> getOwner() async {
+    final result = await (db.select(
+      db.playerTable,
+    )..where((p) => p.isOwner.equals(true))).get();
+
+    if (result.length == 1) {
+      return Result.ok(result.first.toPlayer());
+    }
+    if (result.isEmpty) {
+      return Result.error(Exception("No owner found"));
+    }
+    throw Exception("Multiple owner found. This should never happen");
   }
 
   Future<Result<void>> updatePlayerName(String playerId, String newName) async {

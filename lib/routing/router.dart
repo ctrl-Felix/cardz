@@ -1,10 +1,11 @@
-import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/add/widgets/add_match_screen.dart';
-import 'package:doublehead/ui/add/widgets/add_player_screen.dart';
-import 'package:doublehead/ui/add/widgets/add_screen.dart';
-import 'package:doublehead/ui/home_wrapper/widgets/home_wrapper_screen.dart';
-import 'package:doublehead/ui/match/widgets/match_screen.dart';
-import 'package:doublehead/ui/players/widgets/home_players_screen.dart';
+import 'package:cardcrew/routing/routes.dart';
+import 'package:cardcrew/ui/add/widgets/add_match_screen.dart';
+import 'package:cardcrew/ui/add/widgets/add_player_screen.dart';
+import 'package:cardcrew/ui/add/widgets/add_screen.dart';
+import 'package:cardcrew/ui/home_wrapper/widgets/home_wrapper_screen.dart';
+import 'package:cardcrew/ui/match/widgets/match_screen.dart';
+import 'package:cardcrew/ui/players/widgets/home_players_screen.dart';
+import 'package:cardcrew/ui/splash/widgets/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,8 +14,9 @@ import '../ui/match/subscreens/manage_players_screen.dart';
 import '../ui/player/player_screen.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.home,
+  initialLocation: Routes.splash,
   routes: [
+    GoRoute(path: Routes.splash, builder: (c, s) => SplashScreen()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return HomeWrapperScreen(navigationShell: navigationShell);
@@ -33,18 +35,18 @@ final router = GoRouter(
             GoRoute(
               path: Routes.players, // you'll need this route
               builder: (context, state) => HomePlayersScreen(),
-              routes: [
-                GoRoute(
-                  path: Routes.playerRelative,
-                  builder: (context, state) =>
-                      PlayerScreen(playerId: state.pathParameters["playerId"]!),
-                ),
-              ],
+              routes: [],
             ),
           ],
         ),
       ],
     ),
+    GoRoute(
+      path: Routes.player,
+      builder: (context, state) =>
+          PlayerScreen(playerId: state.pathParameters["playerId"]!),
+    ),
+
     GoRoute(
       path: Routes.add,
       builder: (context, state) => AddScreen(),

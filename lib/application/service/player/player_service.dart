@@ -16,6 +16,12 @@ abstract class PlayerServiceState with _$PlayerServiceState {
     @Default(null) String? errorMessage,
     @Default([]) List<Player> players,
   }) = _PlayerServiceState;
+
+  const PlayerServiceState._();
+
+  List<Player> get nonOwnerPlayers => players.where((p) => !p.isOwner).toList();
+
+  Player get owner => players.firstWhere((p) => p.isOwner);
 }
 
 @Riverpod(keepAlive: true)

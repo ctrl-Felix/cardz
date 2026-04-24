@@ -1,4 +1,4 @@
-import 'package:doublehead/data/source/drift/database.dart';
+import 'package:cardcrew/data/source/drift/database.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'match.freezed.dart';

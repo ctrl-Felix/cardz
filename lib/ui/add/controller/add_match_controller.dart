@@ -1,7 +1,7 @@
-import 'package:doublehead/config/riverpod_dependencies.dart';
-import 'package:doublehead/domain/match/match.dart';
-import 'package:doublehead/domain/player/player.dart';
-import 'package:doublehead/utils/result.dart';
+import 'package:cardcrew/config/riverpod_dependencies.dart';
+import 'package:cardcrew/domain/match/match.dart';
+import 'package:cardcrew/domain/player/player.dart';
+import 'package:cardcrew/utils/result.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

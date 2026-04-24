@@ -1,9 +1,9 @@
-import 'package:doublehead/application/service/matches/matches_service.dart';
-import 'package:doublehead/config/riverpod_dependencies.dart';
-import 'package:doublehead/domain/match_round/match_round.dart';
-import 'package:doublehead/domain/participant/participant.dart';
-import 'package:doublehead/domain/player/player.dart';
-import 'package:doublehead/utils/result.dart';
+import 'package:cardcrew/application/service/matches/matches_service.dart';
+import 'package:cardcrew/config/riverpod_dependencies.dart';
+import 'package:cardcrew/domain/match_round/match_round.dart';
+import 'package:cardcrew/domain/participant/participant.dart';
+import 'package:cardcrew/domain/player/player.dart';
+import 'package:cardcrew/utils/result.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

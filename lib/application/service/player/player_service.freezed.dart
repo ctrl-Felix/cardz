@@ -207,8 +207,8 @@ return $default(_that.isLoading,_that.errorMessage,_that.players);case _:
 /// @nodoc
 
 
-class _PlayerServiceState implements PlayerServiceState {
-  const _PlayerServiceState({this.isLoading = false, this.errorMessage = null, final  List<Player> players = const []}): _players = players;
+class _PlayerServiceState extends PlayerServiceState {
+  const _PlayerServiceState({this.isLoading = false, this.errorMessage = null, final  List<Player> players = const []}): _players = players,super._();
   
 
 @override@JsonKey() final  bool isLoading;

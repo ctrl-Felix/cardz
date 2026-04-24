@@ -390,8 +390,23 @@ class $PlayerTableTable extends PlayerTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _isOwnerMeta = const VerificationMeta(
+    'isOwner',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<bool> isOwner = GeneratedColumn<bool>(
+    'is_owner',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_owner" IN (0, 1))',
+    ),
+    clientDefault: () => false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, isOwner];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -415,6 +430,12 @@ class $PlayerTableTable extends PlayerTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('is_owner')) {
+      context.handle(
+        _isOwnerMeta,
+        isOwner.isAcceptableOrUnknown(data['is_owner']!, _isOwnerMeta),
+      );
+    }
     return context;
   }
 
@@ -432,6 +453,10 @@ class $PlayerTableTable extends PlayerTable
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      isOwner: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_owner'],
+      )!,
     );
   }
 
@@ -444,17 +469,27 @@ class $PlayerTableTable extends PlayerTable
 class PlayerTableData extends DataClass implements Insertable<PlayerTableData> {
   final String id;
   final String name;
-  const PlayerTableData({required this.id, required this.name});
+  final bool isOwner;
+  const PlayerTableData({
+    required this.id,
+    required this.name,
+    required this.isOwner,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['name'] = Variable<String>(name);
+    map['is_owner'] = Variable<bool>(isOwner);
     return map;
   }
 
   PlayerTableCompanion toCompanion(bool nullToAbsent) {
-    return PlayerTableCompanion(id: Value(id), name: Value(name));
+    return PlayerTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      isOwner: Value(isOwner),
+    );
   }
 
   factory PlayerTableData.fromJson(
@@ -465,6 +500,7 @@ class PlayerTableData extends DataClass implements Insertable<PlayerTableData> {
     return PlayerTableData(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      isOwner: serializer.fromJson<bool>(json['isOwner']),
     );
   }
   @override
@@ -473,15 +509,21 @@ class PlayerTableData extends DataClass implements Insertable<PlayerTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
+      'isOwner': serializer.toJson<bool>(isOwner),
     };
   }
 
-  PlayerTableData copyWith({String? id, String? name}) =>
-      PlayerTableData(id: id ?? this.id, name: name ?? this.name);
+  PlayerTableData copyWith({String? id, String? name, bool? isOwner}) =>
+      PlayerTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        isOwner: isOwner ?? this.isOwner,
+      );
   PlayerTableData copyWithCompanion(PlayerTableCompanion data) {
     return PlayerTableData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      isOwner: data.isOwner.present ? data.isOwner.value : this.isOwner,
     );
   }
 
@@ -489,43 +531,50 @@ class PlayerTableData extends DataClass implements Insertable<PlayerTableData> {
   String toString() {
     return (StringBuffer('PlayerTableData(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('isOwner: $isOwner')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, isOwner);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is PlayerTableData &&
           other.id == this.id &&
-          other.name == this.name);
+          other.name == this.name &&
+          other.isOwner == this.isOwner);
 }
 
 class PlayerTableCompanion extends UpdateCompanion<PlayerTableData> {
   final Value<String> id;
   final Value<String> name;
+  final Value<bool> isOwner;
   final Value<int> rowid;
   const PlayerTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.isOwner = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   PlayerTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
+    this.isOwner = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : name = Value(name);
   static Insertable<PlayerTableData> custom({
     Expression<String>? id,
     Expression<String>? name,
+    Expression<bool>? isOwner,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (isOwner != null) 'is_owner': isOwner,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -533,11 +582,13 @@ class PlayerTableCompanion extends UpdateCompanion<PlayerTableData> {
   PlayerTableCompanion copyWith({
     Value<String>? id,
     Value<String>? name,
+    Value<bool>? isOwner,
     Value<int>? rowid,
   }) {
     return PlayerTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      isOwner: isOwner ?? this.isOwner,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -551,6 +602,9 @@ class PlayerTableCompanion extends UpdateCompanion<PlayerTableData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (isOwner.present) {
+      map['is_owner'] = Variable<bool>(isOwner.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -562,6 +616,7 @@ class PlayerTableCompanion extends UpdateCompanion<PlayerTableData> {
     return (StringBuffer('PlayerTableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('isOwner: $isOwner, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1489,12 +1544,14 @@ typedef $$PlayerTableTableCreateCompanionBuilder =
     PlayerTableCompanion Function({
       Value<String> id,
       required String name,
+      Value<bool> isOwner,
       Value<int> rowid,
     });
 typedef $$PlayerTableTableUpdateCompanionBuilder =
     PlayerTableCompanion Function({
       Value<String> id,
       Value<String> name,
+      Value<bool> isOwner,
       Value<int> rowid,
     });
 
@@ -1514,6 +1571,11 @@ class $$PlayerTableTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isOwner => $composableBuilder(
+    column: $table.isOwner,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1536,6 +1598,11 @@ class $$PlayerTableTableOrderingComposer
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isOwner => $composableBuilder(
+    column: $table.isOwner,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$PlayerTableTableAnnotationComposer
@@ -1552,6 +1619,9 @@ class $$PlayerTableTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get isOwner =>
+      $composableBuilder(column: $table.isOwner, builder: (column) => column);
 }
 
 class $$PlayerTableTableTableManager
@@ -1587,15 +1657,26 @@ class $$PlayerTableTableTableManager
               ({
                 Value<String> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
+                Value<bool> isOwner = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => PlayerTableCompanion(id: id, name: name, rowid: rowid),
+              }) => PlayerTableCompanion(
+                id: id,
+                name: name,
+                isOwner: isOwner,
+                rowid: rowid,
+              ),
           createCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
                 required String name,
+                Value<bool> isOwner = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) =>
-                  PlayerTableCompanion.insert(id: id, name: name, rowid: rowid),
+              }) => PlayerTableCompanion.insert(
+                id: id,
+                name: name,
+                isOwner: isOwner,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),

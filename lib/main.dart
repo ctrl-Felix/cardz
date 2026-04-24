@@ -1,6 +1,6 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/routing/router.dart';
-import 'package:doublehead/ui/home_wrapper/widgets/home_wrapper_screen.dart';
+import 'package:cardcrew/routing/router.dart';
+import 'package:cardcrew/ui/home_wrapper/widgets/home_wrapper_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

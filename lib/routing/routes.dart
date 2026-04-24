@@ -1,7 +1,9 @@
 abstract final class Routes {
   static const home = '/';
+  static const splash = '/splash';
   static const players = '/players';
   static const playerRelative = '/:playerId';
+  static const player = '$players$playerRelative';
   static String playerPath(String playerId) => '$players/$playerId';
 
   static const add = '/add';

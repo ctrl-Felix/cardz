@@ -1,16 +1,16 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/application/service/matches/matches_service.dart';
-import 'package:doublehead/application/service/match/match_service.dart';
-import 'package:doublehead/domain/match/match.dart';
-import 'package:doublehead/domain/participant/participant.dart';
-import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/match/controller/match_controller.dart';
-import 'package:doublehead/ui/match/widgets/components/leaderboard_widget.dart';
-import 'package:doublehead/ui/match/widgets/components/new_round_widget.dart';
-import 'package:doublehead/ui/match/widgets/components/rounds_score_table.dart';
-import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
-import 'package:doublehead/ui/shared/ui_card.dart';
-import 'package:doublehead/ui/shared/ui_carded_list.dart';
+import 'package:cardcrew/application/service/matches/matches_service.dart';
+import 'package:cardcrew/application/service/match/match_service.dart';
+import 'package:cardcrew/domain/match/match.dart';
+import 'package:cardcrew/domain/participant/participant.dart';
+import 'package:cardcrew/routing/routes.dart';
+import 'package:cardcrew/ui/match/controller/match_controller.dart';
+import 'package:cardcrew/ui/match/widgets/components/leaderboard_widget.dart';
+import 'package:cardcrew/ui/match/widgets/components/new_round_widget.dart';
+import 'package:cardcrew/ui/match/widgets/components/rounds_score_table.dart';
+import 'package:cardcrew/ui/shared/ui_app_sub_page.dart';
+import 'package:cardcrew/ui/shared/ui_card.dart';
+import 'package:cardcrew/ui/shared/ui_carded_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -126,18 +126,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
             },
           ),
           const SizedBox(height: 8),
-          UiCardedList(
-            items: [
-              UiCardedListItem(
-                title: "Manage players",
-                subtitle: "Add players or mark users as inactive",
-                color: CupertinoColors.systemBlue,
-                onTap: () {
-                  context.push(Routes.matchManagePlayersPath(widget.matchId));
-                },
-              ),
-            ],
-          ),
           if (_overviewTab == 0) LeaderboardWidget(matchId: widget.matchId),
 
           if (_overviewTab == 1)

@@ -1,5 +1,5 @@
-import 'package:doublehead/data/source/drift/database.dart';
-import 'package:doublehead/domain/match/match.dart';
+import 'package:cardcrew/data/source/drift/database.dart';
+import 'package:cardcrew/domain/match/match.dart';
 import 'package:drift/drift.dart';
 
 import '../../utils/result.dart';

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Player {
 
- String get name; String get id;
+ String get name; String get id; bool get isOwner;
 /// Create a copy of Player
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PlayerCopyWith<Player> get copyWith => _$PlayerCopyWithImpl<Player>(this as Pla
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Player&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Player&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,id);
+int get hashCode => Object.hash(runtimeType,name,id,isOwner);
 
 @override
 String toString() {
-  return 'Player(name: $name, id: $id)';
+  return 'Player(name: $name, id: $id, isOwner: $isOwner)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PlayerCopyWith<$Res>  {
   factory $PlayerCopyWith(Player value, $Res Function(Player) _then) = _$PlayerCopyWithImpl;
 @useResult
 $Res call({
- String name, String id
+ String name, String id, bool isOwner
 });
 
 
@@ -62,11 +62,12 @@ class _$PlayerCopyWithImpl<$Res>
 
 /// Create a copy of Player
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? id = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? id = null,Object? isOwner = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String id)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String id,  bool isOwner)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Player() when $default != null:
-return $default(_that.name,_that.id);case _:
+return $default(_that.name,_that.id,_that.isOwner);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.name,_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String id)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String id,  bool isOwner)  $default,) {final _that = this;
 switch (_that) {
 case _Player():
-return $default(_that.name,_that.id);case _:
+return $default(_that.name,_that.id,_that.isOwner);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.name,_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String id)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String id,  bool isOwner)?  $default,) {final _that = this;
 switch (_that) {
 case _Player() when $default != null:
-return $default(_that.name,_that.id);case _:
+return $default(_that.name,_that.id,_that.isOwner);case _:
   return null;
 
 }
@@ -207,11 +208,12 @@ return $default(_that.name,_that.id);case _:
 
 
 class _Player implements Player {
-  const _Player({required this.name, required this.id});
+  const _Player({required this.name, required this.id, required this.isOwner});
   
 
 @override final  String name;
 @override final  String id;
+@override final  bool isOwner;
 
 /// Create a copy of Player
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +225,16 @@ _$PlayerCopyWith<_Player> get copyWith => __$PlayerCopyWithImpl<_Player>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Player&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Player&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,id);
+int get hashCode => Object.hash(runtimeType,name,id,isOwner);
 
 @override
 String toString() {
-  return 'Player(name: $name, id: $id)';
+  return 'Player(name: $name, id: $id, isOwner: $isOwner)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$PlayerCopyWith<$Res> implements $PlayerCopyWith<$Res> {
   factory _$PlayerCopyWith(_Player value, $Res Function(_Player) _then) = __$PlayerCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String id
+ String name, String id, bool isOwner
 });
 
 
@@ -260,11 +262,12 @@ class __$PlayerCopyWithImpl<$Res>
 
 /// Create a copy of Player
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? id = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? id = null,Object? isOwner = null,}) {
   return _then(_Player(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

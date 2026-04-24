@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:doublehead/data/source/drift/database.dart';
-import 'package:doublehead/domain/match_round/match_round.dart';
-import 'package:doublehead/utils/result.dart';
+import 'package:cardcrew/data/source/drift/database.dart';
+import 'package:cardcrew/domain/match_round/match_round.dart';
+import 'package:cardcrew/utils/result.dart';
 import 'package:drift/drift.dart';
 
 class MatchRoundRepository {

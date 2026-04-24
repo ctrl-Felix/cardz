@@ -1,9 +1,9 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/application/service/matches/matches_service.dart';
-import 'package:doublehead/application/service/player/player_service.dart';
-import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/home/widgets/home_add_popup_screen.dart';
-import 'package:doublehead/ui/shared/app_app_bar.dart';
+import 'package:cardcrew/application/service/matches/matches_service.dart';
+import 'package:cardcrew/application/service/player/player_service.dart';
+import 'package:cardcrew/routing/routes.dart';
+import 'package:cardcrew/ui/home/widgets/home_add_popup_screen.dart';
+import 'package:cardcrew/ui/shared/app_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeWrapperScreen> {
     return AdaptiveScaffold(
       minimizeBehavior: TabBarMinimizeBehavior.never,
 
-      // appBar: adaptiveAppBar(context),
+      appBar: adaptiveAppBar(context),
       bottomNavigationBar: AdaptiveBottomNavigationBar(
         items: [
           AdaptiveNavigationDestination(icon: 'house.fill', label: 'Home'),

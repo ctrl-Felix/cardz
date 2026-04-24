@@ -1,7 +1,7 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/ui/player/controller/player_controller.dart';
-import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
-import 'package:doublehead/ui/shared/ui_carded_list.dart';
+import 'package:cardcrew/ui/player/controller/player_controller.dart';
+import 'package:cardcrew/ui/shared/ui_app_sub_page.dart';
+import 'package:cardcrew/ui/shared/ui_carded_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

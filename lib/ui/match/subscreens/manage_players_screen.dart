@@ -1,12 +1,12 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/application/service/match/match_service.dart';
-import 'package:doublehead/application/service/player/player_service.dart';
-import 'package:doublehead/domain/participant/participant.dart';
-import 'package:doublehead/ui/match/controller/match_controller.dart';
-import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
-import 'package:doublehead/ui/shared/ui_card.dart';
-import 'package:doublehead/ui/shared/ui_carded_list.dart';
-import 'package:doublehead/ui/shared/ui_text.dart';
+import 'package:cardcrew/application/service/match/match_service.dart';
+import 'package:cardcrew/application/service/player/player_service.dart';
+import 'package:cardcrew/domain/participant/participant.dart';
+import 'package:cardcrew/ui/match/controller/match_controller.dart';
+import 'package:cardcrew/ui/shared/ui_app_sub_page.dart';
+import 'package:cardcrew/ui/shared/ui_card.dart';
+import 'package:cardcrew/ui/shared/ui_carded_list.dart';
+import 'package:cardcrew/ui/shared/ui_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

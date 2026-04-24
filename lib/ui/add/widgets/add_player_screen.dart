@@ -1,8 +1,8 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/add/controller/add_player_controller.dart';
-import 'package:doublehead/ui/shared/ui_app_sub_page.dart';
-import 'package:doublehead/ui/shared/ui_text.dart';
+import 'package:cardcrew/routing/routes.dart';
+import 'package:cardcrew/ui/add/controller/add_player_controller.dart';
+import 'package:cardcrew/ui/shared/ui_app_sub_page.dart';
+import 'package:cardcrew/ui/shared/ui_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

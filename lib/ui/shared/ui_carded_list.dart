@@ -1,6 +1,6 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/ui/shared/ui_card.dart';
-import 'package:doublehead/ui/shared/ui_text.dart';
+import 'package:cardcrew/ui/shared/ui_card.dart';
+import 'package:cardcrew/ui/shared/ui_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class UiCardedListItem {

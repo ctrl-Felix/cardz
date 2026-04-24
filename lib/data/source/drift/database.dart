@@ -1,7 +1,7 @@
-import 'package:doublehead/data/source/drift/tables/match.dart';
-import 'package:doublehead/data/source/drift/tables/match_participant.dart';
-import 'package:doublehead/data/source/drift/tables/match_round.dart';
-import 'package:doublehead/data/source/drift/tables/player.dart';
+import 'package:cardcrew/data/source/drift/tables/match.dart';
+import 'package:cardcrew/data/source/drift/tables/match_participant.dart';
+import 'package:cardcrew/data/source/drift/tables/match_round.dart';
+import 'package:cardcrew/data/source/drift/tables/player.dart';
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/internal/versioned_schema.dart';

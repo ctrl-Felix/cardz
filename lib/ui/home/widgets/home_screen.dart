@@ -1,9 +1,9 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:doublehead/domain/match/match.dart';
-import 'package:doublehead/routing/routes.dart';
-import 'package:doublehead/ui/home/controller/home_controller.dart';
-import 'package:doublehead/ui/shared/ui_card.dart';
-import 'package:doublehead/ui/shared/ui_text.dart';
+import 'package:cardcrew/domain/match/match.dart';
+import 'package:cardcrew/routing/routes.dart';
+import 'package:cardcrew/ui/home/controller/home_controller.dart';
+import 'package:cardcrew/ui/shared/ui_card.dart';
+import 'package:cardcrew/ui/shared/ui_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +33,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(matchesServiceProvider);
     return AdaptiveScaffold(
-      appBar: adaptiveAppBar(context),
+      // appBar: adaptiveAppBar(context),
       body: ListView(
         physics: const ClampingScrollPhysics(),
 

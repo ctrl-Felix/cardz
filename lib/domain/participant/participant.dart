@@ -1,4 +1,4 @@
-import 'package:doublehead/domain/player/player.dart';
+import 'package:cardcrew/domain/player/player.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'participant.freezed.dart';

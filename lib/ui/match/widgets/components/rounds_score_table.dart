@@ -1,6 +1,6 @@
-import 'package:doublehead/application/service/matches/matches_service.dart';
-import 'package:doublehead/domain/player/player.dart';
-import 'package:doublehead/ui/match/controller/match_controller.dart';
+import 'package:cardcrew/application/service/matches/matches_service.dart';
+import 'package:cardcrew/domain/player/player.dart';
+import 'package:cardcrew/ui/match/controller/match_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
